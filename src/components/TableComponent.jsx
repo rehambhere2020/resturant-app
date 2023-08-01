@@ -7,11 +7,20 @@ function TableComponent({ data, columns ,defaultSortKey  }) {
   const [sortKey, setSortKey] = useState(defaultSortKey);
   const [sortOrder, setSortOrder] = useState('asc');
   const [currentPage, setCurrentPage] = useState(1);
+
+  
 // Helper function to extract time from datetime string
 const extractTimeFromDatetime = (datetime) => {
   const date = new Date(datetime);
   return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 };
+
+const customTimeCompare=(a, b)=> {
+  const timeA = extractTimeFromDatetime(a);
+  const timeB = extractTimeFromDatetime(b);
+  return sortOrder === 'asc' ? timeA.localeCompare(timeB) : timeB.localeCompare(timeA);
+}
+
   const sortedData = useMemo(() => {
     const compareFunction = (a, b) => {
       if (sortKey === 'guestNumber') {
@@ -22,13 +31,9 @@ const extractTimeFromDatetime = (datetime) => {
         const guestB = b.customer.firstName + ' ' + b.customer.lastName;
         return sortOrder === 'asc' ? guestA.localeCompare(guestB) : guestB.localeCompare(guestA);
       }else if(sortKey === 'start'){
-        const timeA = extractTimeFromDatetime(a.start);
-        const timeB = extractTimeFromDatetime(b.start);
-        return sortOrder === 'asc' ? timeA.localeCompare(timeB) : timeB.localeCompare(timeA);
+        return customTimeCompare(a.start, b.start)
         }else if(sortKey === 'end'){
-          const timeA = extractTimeFromDatetime(a.end);
-          const timeB = extractTimeFromDatetime(b.end);
-          return sortOrder === 'asc' ? timeA.localeCompare(timeB) : timeB.localeCompare(timeA);
+          return customTimeCompare(a.end, b.end)
         }else{
         // Fallback: Sort by date if the sort field is not recognized
         if (a[sortKey] < b[sortKey]) return sortOrder === 'asc' ? -1 : 1;
