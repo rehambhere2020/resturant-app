@@ -13,7 +13,7 @@
   }
   
   .table th {
-    background-color: #54007d;
+    /* background-color: #54007d; */
     text-transform: capitalize;
   }
   .table tr {
@@ -34,9 +34,9 @@
   }
   span.badge{
     color: white;
-    font-size: 0.6rem;
+    font-size: 0.8rem;
     padding: 10px;
-    background-color: #b300b3;
+    background-color: #c3c3;
     display: inline-block;
     border-radius: 0.9rem;
     text-align: center;

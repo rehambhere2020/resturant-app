@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import ReservationList from './ReservationList';
 function ReservationListSection() {
@@ -22,15 +22,6 @@ function ReservationListSection() {
 
     fetchData()
   }, []);
-
-  const ErrorFallbackUI = () => {
-    return (
-      <div>
-        <h2>Oops! Something went wrong.</h2>
-        <p>Please try again later or contact support.</p>
-      </div>
-    );
-  };
 
   return (
     <>

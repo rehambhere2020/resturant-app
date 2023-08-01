@@ -3,8 +3,7 @@ import TableComponent from '../components/TableComponent';
 import FilterByArea from '../components/FilterByArea';
 import FilterByShift from '../components/FilterByShift';
 import FilterByStatus from '../components/FilterByStatus';
-import SearchComponent from '../components/SearchComonent';
-import { debounce } from '../utils/debonce';
+import SearchComponent from '../components/SearchComponent';
 import FilterByDate from '../components/FilterByDate';
 
 function ReservationList({reservations}) {
@@ -134,7 +133,7 @@ const handleSearch = (searchText) => {
        </div>
         <div className='row'>
         <FilterByDate onFilter={handleDateFilterChange} />
-                    <button onClick={handleResetFilters} className='btn-reset'>Reset Filters</button> 
+          <button onClick={handleResetFilters} className='btn-reset'>Reset Filters</button> 
         </div>
 
        </div>

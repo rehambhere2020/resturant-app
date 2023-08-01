@@ -1,4 +1,4 @@
-import { debounce } from '../utils/debonce';
+import { debounce } from '../utils/debounce';
 
 import React, { useState } from 'react';
 
