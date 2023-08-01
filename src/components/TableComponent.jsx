@@ -15,12 +15,6 @@ const extractTimeFromDatetime = (datetime) => {
   return date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 };
 
-const customTimeCompare=(a, b)=> {
-  const timeA = extractTimeFromDatetime(a);
-  const timeB = extractTimeFromDatetime(b);
-  return sortOrder === 'asc' ? timeA.localeCompare(timeB) : timeB.localeCompare(timeA);
-}
-
   const sortedData = useMemo(() => {
     const compareFunction = (a, b) => {
       if (sortKey === 'guestNumber') {
@@ -30,10 +24,6 @@ const customTimeCompare=(a, b)=> {
         const guestA = a.customer.firstName + ' ' + a.customer.lastName;
         const guestB = b.customer.firstName + ' ' + b.customer.lastName;
         return sortOrder === 'asc' ? guestA.localeCompare(guestB) : guestB.localeCompare(guestA);
-      }else if(sortKey === 'start'){
-        return customTimeCompare(a.start, b.start)
-        }else if(sortKey === 'end'){
-          return customTimeCompare(a.end, b.end)
         }else{
         // Fallback: Sort by date if the sort field is not recognized
         if (a[sortKey] < b[sortKey]) return sortOrder === 'asc' ? -1 : 1;
@@ -47,9 +37,12 @@ const customTimeCompare=(a, b)=> {
 
 
   const handleSort = (key) => {
+    if (key === 'start' || key === 'end') {
+      return; // Do nothing for non-sortable columns
+    }
     if (sortKey === key) {
       setSortOrder(sortOrder === 'asc' ? 'desc' : 'asc');
-    } else {
+     }else{
       setSortKey(key);
       setSortOrder('asc');
     }
@@ -60,7 +53,6 @@ const customTimeCompare=(a, b)=> {
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
   const paginatedData = sortedData.slice(startIndex, endIndex);
-
     const renderCellValue = (row, column) => {
         // Check if the column key has a nested property
         if (column.key.includes('.')) {
@@ -100,7 +92,10 @@ const customTimeCompare=(a, b)=> {
         {columns.map((column) => (
            <th key={column.key} onClick={() => handleSort(column.key)}>
            {column.header}
-           {sortKey === column.key && (sortOrder === 'asc' ? '▲' : '▼')}
+           {sortKey === column.key &&
+                column.key !== 'start' &&
+                column.key !== 'end' &&
+                (sortOrder === 'asc' ? '▲' : '▼')}
          </th>
         ))}
       </tr>
@@ -109,13 +104,13 @@ const customTimeCompare=(a, b)=> {
       {paginatedData.map((row, rowIndex) => (
         <tr key={rowIndex}>
           {columns.map((column) => (
-            <>
-        
-            {column.key==="status"?<td key={`${column.key}-${rowIndex}`}><span className='badge'>{renderCellValue(row, column)}</span></td>:
-                        <td key={`${column.key}-${rowIndex}`} >{renderCellValue(row, column)}</td>
-                      }
-
-            </>
+         <td key={`${column.key}-${rowIndex}`}>
+         {column.key === "status" ? (
+           <span className='badge'>{renderCellValue(row, column)}</span>
+         ) : (
+           renderCellValue(row, column)
+         )}
+       </td>
           ))}
         </tr>
       ))}
