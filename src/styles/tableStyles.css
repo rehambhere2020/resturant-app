@@ -1,0 +1,45 @@
+.table {
+    width: 80%;
+    border-collapse: collapse;
+    text-align: center;
+    
+ 
+  }
+  
+  .table th,
+  .table td {
+    border: 1px solid #ccc;
+    padding: 8px;
+  }
+  
+  .table th {
+    background-color: #54007d;
+    text-transform: capitalize;
+  }
+  .table tr {
+    text-transform: lowercase;
+    transition: background-color 0.3s ease; /* Adjust the duration as desired */
+  }
+  .table tr:hover {
+    background: rgba(0, 0, 0, 0.4);
+      cursor: pointer; 
+  }
+  .table th:first-child,
+  .table td:first-child {
+    text-align: left;
+  }
+  .table td{
+    font-size: 0.8rem;
+    white-space: nowrap;
+  }
+  span.badge{
+    color: white;
+    font-size: 0.6rem;
+    padding: 10px;
+    background-color: #b300b3;
+    display: inline-block;
+    border-radius: 0.9rem;
+    text-align: center;
+    
+  }
+
